@@ -1,6 +1,7 @@
 import App from './App';
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
+import FullSchemaGenerator from './components/layout/RelationshipGenerator';
 import TrackPage from './pages/TrackPage';
 
 const routes = [
@@ -9,7 +10,7 @@ const routes = [
         element: <App />, 
         errorElement: <ErrorPage />, 
         children: [
-            { index: true, element: <HomePage /> },
+            { index: true, element: <FullSchemaGenerator /> },
             { path: 'tracks', element: <TrackPage /> },
             { path: '*', element: <ErrorPage /> }
         ]
