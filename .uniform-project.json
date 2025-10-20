@@ -1,0 +1,46 @@
+{
+  "name": "keep-track",
+  "type": "fullstack",
+  "generated": "2025-10-20T13:08:18.170Z",
+  "generator": "uniform-build v1.0.0",
+  "entities": [
+    "Track",
+    "Artist",
+    "Link",
+    "Tag",
+    "Media"
+  ],
+  "relationships": [
+    {
+      "entity1": "Track",
+      "entity2": "Artist",
+      "type": "many-to-many"
+    },
+    {
+      "entity1": "Track",
+      "entity2": "Link",
+      "type": "entity2-to-entity1"
+    },
+    {
+      "entity1": "Track",
+      "entity2": "Tag",
+      "type": "many-to-many"
+    }
+  ],
+  "features": [
+    "auth",
+    "admin",
+    "uploads"
+  ],
+  "killSwitches": {
+    "skipFrontend": false,
+    "skipBackend": false,
+    "skipRelationships": false,
+    "skipProviders": false,
+    "skipApiService": false
+  },
+  "stats": {
+    "totalFiles": 0,
+    "linesOfCode": 0
+  }
+}
