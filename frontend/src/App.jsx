@@ -1,9 +1,10 @@
 import { Outlet } from 'react-router-dom';
 import NavBar from './components/layout/NavBar';
-import TrackProvider from './providers/TrackProvider';
+import TrackProvider from './providers/TrackProvider'
 
 function App() {
   return (
+    <>
     <TrackProvider>
      
               <header>
@@ -13,6 +14,7 @@ function App() {
                 <Outlet />
               </main>
     </TrackProvider>
+    </>
   );
 }
 
