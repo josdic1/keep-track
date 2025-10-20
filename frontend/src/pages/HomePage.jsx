@@ -1,4 +1,5 @@
-export default function HomePage() {
+
+function HomePage() {
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-4xl font-bold mb-4">keep-track</h1>
@@ -6,3 +7,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+export default HomePage;

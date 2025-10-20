@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import { TrackContext } from '../providers/TrackProvider';
+import TrackContext from '../contexts/TrackContext'
 import Loading from '../components/common/Loading';
 import Card from '../components/common/Card';
 
-export default function TrackPage() {
+function TrackPage() {
   const { tracks, loading, error } = useContext(TrackContext);
 
   if (loading) return <Loading />;
@@ -23,3 +23,5 @@ export default function TrackPage() {
     </div>
   );
 }
+
+export default TrackPage;

@@ -1,9 +1,8 @@
-import { createContext, useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { getTracks } from '../services/api';
+import TrackContext from '../contexts/TrackContext';
 
-export const TrackContext = createContext();
-
-export function TrackProvider({ children }) {
+function TrackProvider({ children }) {
   const [tracks, setTracks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,6 +10,8 @@ export function TrackProvider({ children }) {
   useEffect(() => {
     fetchTracks();
   }, []);
+
+
 
   async function fetchTracks() {
     try {
@@ -38,3 +39,5 @@ export function TrackProvider({ children }) {
     </TrackContext.Provider>
   );
 }
+
+export default TrackProvider
