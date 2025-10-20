@@ -1,22 +1,7 @@
 from .extensions import ma
-from .models import Track, Artist, Link, Tag, Media
-
-class TrackSchema(ma.SQLAlchemyAutoSchema):
-    artists = ma.Nested('ArtistSchema', many=true, exclude=('tracks',))
-    links = ma.Nested('LinkSchema', many=true, exclude=('track',))
-    tags = ma.Nested('TagSchema', many=true, exclude=('tracks',))
-
-    class Meta:
-        model = Track
-        load_instance = True
-        include_fk = True
-
-track_schema = TrackSchema()
-tracks_schema = TrackSchema(many=True)
+from .models import Track, Artist, Link, Tag, Media, StatusHistory
 
 class ArtistSchema(ma.SQLAlchemyAutoSchema):
-    tracks = ma.Nested('TrackSchema', many=true, exclude=('artists',))
-
     class Meta:
         model = Artist
         load_instance = True
@@ -25,9 +10,17 @@ class ArtistSchema(ma.SQLAlchemyAutoSchema):
 artist_schema = ArtistSchema()
 artists_schema = ArtistSchema(many=True)
 
-class LinkSchema(ma.SQLAlchemyAutoSchema):
-    track = ma.Nested('TrackSchema', many=false, exclude=('links',))
 
+class TagSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Tag
+        load_instance = True
+
+tag_schema = TagSchema()
+tags_schema = TagSchema(many=True)
+
+
+class LinkSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Link
         load_instance = True
@@ -36,16 +29,16 @@ class LinkSchema(ma.SQLAlchemyAutoSchema):
 link_schema = LinkSchema()
 links_schema = LinkSchema(many=True)
 
-class TagSchema(ma.SQLAlchemyAutoSchema):
-    tracks = ma.Nested('TrackSchema', many=true, exclude=('tags',))
 
+class StatusHistorySchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = Tag
+        model = StatusHistory
         load_instance = True
         include_fk = True
 
-tag_schema = TagSchema()
-tags_schema = TagSchema(many=True)
+status_history_schema = StatusHistorySchema()
+status_histories_schema = StatusHistorySchema(many=True)
+
 
 class MediaSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -56,3 +49,33 @@ class MediaSchema(ma.SQLAlchemyAutoSchema):
 media_schema = MediaSchema()
 medias_schema = MediaSchema(many=True)
 
+
+class TrackSchema(ma.SQLAlchemyAutoSchema):
+    artist = ma.Nested(ArtistSchema, exclude=('tracks',))
+    tags = ma.Nested(TagSchema, many=True, exclude=('tracks',))
+    links = ma.Nested(LinkSchema, many=True, exclude=('track',))
+    status_history = ma.Nested(StatusHistorySchema, many=True, exclude=('track',))
+    media_files = ma.Nested(MediaSchema, many=True, exclude=('track',))
+
+    class Meta:
+        model = Track
+        load_instance = True
+        include_fk = True
+
+track_schema = TrackSchema()
+tracks_schema = TrackSchema(many=True)
+
+
+# Simple schemas without nested relationships (for listings)
+class TrackSimpleSchema(ma.SQLAlchemyAutoSchema):
+    artist_name = ma.Function(lambda obj: obj.artist.name if obj.artist else None)
+    tag_names = ma.Function(lambda obj: [tag.name for tag in obj.tags])
+    
+    class Meta:
+        model = Track
+        load_instance = True
+        include_fk = True
+        exclude = ('artist', 'tags', 'links', 'status_history', 'media_files')
+
+track_simple_schema = TrackSimpleSchema()
+tracks_simple_schema = TrackSimpleSchema(many=True)

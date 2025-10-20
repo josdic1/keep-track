@@ -2,6 +2,14 @@
 
 > Generated with **Uniform Build** on 10/20/2025
 
+# Common = "Can be used ANYWHERE in any app"
+# Layout = "Defines HOW pages are structured"  
+# Features = "Specific to THIS app's business logic"
+
+# Ollama: port 11434
+# Flask: port 5555
+# Vite: port 5173
+
 ## 🏗️ Project Structure
 
 ```
